@@ -43,7 +43,8 @@ const vendorLogin=async (req,res)=>{
         return res.status(401).json({message:"username or password unmatched"})
     }
     const token=jwt.sign({vendorId:vemail._id},secretkey)
-    res.status(201).json({message:"logined successfully",token})
+    const vendorid = vemail._id;
+    res.status(201).json({message:"logined successfully",token,vendorid})
     }catch(err){
         console.log(err);
         res.status(501).json("error occured")
@@ -69,9 +70,11 @@ const getVendorById=async (req,res)=>{
        if(!vendor){
         return res.status(401).json({error:"internal server error"})
        }
-       res.status(201).json({vendor}) 
+       const vendorfirmid = vendor.firm[0]._id;
+        res.status(200).json({ vid, vendorfirmid, vendor })
+        console.log(vendorfirmid);
     } catch (error) {
-        console.log(err);
+        console.log(error);
         res.status(501).json("error occured") 
         
     }
